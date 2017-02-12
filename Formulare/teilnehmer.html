@@ -6,5 +6,24 @@
     <title>Formular-Titel</title>
   </head>
   <body>
+	<form action="submit_participant.php" method="post">
+		<select name="Stamm">
+		  <option value="1">Barrakuda</option>
+		  <option value="2">Pegasus</option>
+		  <option value="3">Goten</option>
+		</select>
+		<br>
+		
+		<textarea name="motivation" rows="10" cols="30">
+		Senf dazu
+		</textarea>
+		<br>
+		 <form>
+		  <input type="radio" name="essen" value="vegetarisch" checked>Vegetarisch<br>
+		  <input type="radio" name="essen" value="vegan">Vegan<br>
+		  <input type="radio" name="essen" value="fleisch"> Fleisch
+		</form> 
+		<input type="submit" value="Abschicken">
+	</form>
   </body>
 </html>
