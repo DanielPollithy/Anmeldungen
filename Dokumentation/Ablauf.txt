@@ -1,0 +1,26 @@
+1. Arbeitsumgebung aufsetzen
+	1.1 git: 
+	2.1 ftp
+	2.3 ssh
+2. Eingabeformular HTML PHP
+	3.1 Überprüfungen -> Formular ablehnen/akzeptieren
+	3.2 Daten in SQL speichern
+3. PDFs aus SQL ausfüllen
+	4.1 PDF des Teilis in Kursordner abspeichern
+	4.2 PDF des Stafüs in Kursordner abspeichern 
+		-> direkt an LV-Server für Kursablage übertragen
+4. StaFü-Formular
+	4.1 Authentifizierung durch geheimen Code an E-Mail-Adresse
+5. Eingabemaske für Gabi
+	5.1 Schriftlichen Eingang einer Anmeldung bestätigen
+6. E-Mail-Vorlagen versenden
+	6.1 Empfangsbestätigung für Teili
+	6.2 E-Mail mit Checkliste für Stafüs
+	6.3 Anmeldestand an Kursteamer
+7. Terminierte Routinen
+	6.2 E-Mail mit Checkliste für Stafüs verschicken
+8. Logging
+	8.1 Alles loggen
+	8.2 Ausnahmen per E-Mail an den Admin
+9. Testing
+10. Dokumentation und Installationsanleitung
