@@ -27,6 +27,8 @@ foreach ($fields as $fieldname) {
 foreach ($checkboxes as $box) {
 	if (!array_key_exists($box, $_POST)) {
 		$_POST[$box] = false;
+	} else {
+		$_POST[$box] = true;
 	}
 }
 
@@ -62,8 +64,17 @@ send_token_to_groupleader($stafue_mail, $_POST['groupname'], $_POST['firstname']
 
 // TODO: make directory inaccessible for externals
 // TODO: passing $_POST on is bad!!!
-save_participant_pdf($_POST['course'], $_POST['groupname'], $_POST['firstname'], $_POST['lastname'], $_POST)
+$_POST['grundkurs_additional'] = $grundkurs_additional;
+$download_link = save_participant_pdf($_POST['course'], $_POST['groupname'], $_POST['firstname'], $_POST['lastname'], $_POST);
 ?>
 
-<h2>Fertig!</h2>
-<p>Die nächsten Schritten...</p>
+<h2>Die nächsten Schritten:</h2>
+<p>Um die Anmeldung rechtskräftig zu machen: Ausdrucken (<a href="<? echo $download_link; ?>">Druckversion</a>, Foto drauf und abschicken an:</p>
+<p>BdP LV Bayern e.V., Severinstr. 5, 81541 München</p>
+<h2>Was passiert danach?</h2>
+<p> Wenn Gabi aus der Geschäftsstelle deine schriftliche 
+Anmeldung erhalten hat und deine Stafüs ihre Arbeit erledigt haben, 
+bekommst du per E-Mail Bescheid. </p>
+
+
+

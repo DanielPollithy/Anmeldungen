@@ -347,7 +347,8 @@ function add_info_about_participant(
 
 function get_participants_for_administration() {
 	$conn = get_connection();
-	$result = $conn->query("SELECT id, firstname, lastname, groupname, email FROM Participants WHERE firm_date_participant IS NULL ORDER BY id;");
+	$result = $conn->query("SELECT id, firstname, lastname, groupname, email, group_leader_access_token, firm_date_participant  
+	FROM Participants ORDER BY id DESC;");
 	$rows = [];
 	while($row = $result->fetch_array(MYSQLI_NUM)) {
 		$rows[] = $row;

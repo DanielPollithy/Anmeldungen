@@ -30,6 +30,8 @@ foreach ($fields as $fieldname) {
 foreach ($checkboxes as $box) {
 	if (!array_key_exists($box, $_POST)) {
 		$_POST[$box] = false;
+	} else {
+		$_POST[$box] = true;
 	}
 }
 
@@ -60,6 +62,10 @@ add_info_about_participant(
 		$_POST['group_leader_cellphone'],	
 		$_POST['group_leader_access_token']
 );
+
+// TODO: use validated data
+// TODO: don't use $_POST
+save_about_participant_pdf($_POST['course'], $_POST['groupname'], $_POST['firstname'], $_POST['lastname'], $_POST);
 
 ?>
 

@@ -6,6 +6,7 @@ ini_set("error_log", "php-error.log");
 $mail_sender_name = 'Joschko Ruppersberg';
 $mail_sender_address = 'joschko.ruppersberg@pfadfinden.de';
 $about_participant_form_url = 'http://joschko.km20616-23.keymachine.de/Anmeldungen/about_participant.php?token=';
+$main_url = 'http://joschko.km20616-23.keymachine.de/Anmeldungen/';
 $pdf_repository = 'files/';
 
 function send_template_mail($recipient, $template) {	
@@ -47,7 +48,14 @@ function makeFdf($makeFdf, $data)
     1 0 obj<</FDF<< /Fields[';
 
     foreach ($data as $key => $value) {
-        $fdf .= '<</T(' . $key . ')/V(' . $value . ')>>';
+		if (is_bool($value)) {
+			if ($value) {
+				$value = "Yes";
+			} else {
+				$value = "Off";
+			}
+		}
+        $fdf .= '<</T(' . $key . ')/V(' . utf8_decode($value) . ')>>';
     }
 
     $fdf .= "] >> >>
@@ -69,10 +77,15 @@ function get_secret() {
 	return $token;
 }
 
+function get_n_secret($n) {
+	$bytes = openssl_random_pseudo_bytes($n, $cstrong);
+	$token   = bin2hex($bytes);
+	return $token;
+}
+
 function save_participant_pdf($course, $groupname, $firstname, $lastname, $data) {
-	$uuid = uniqid();
-	$filename = $GLOBALS['pdf_repository'] . $course . "/" . "$firstname $lastname $groupname {$uuid}.pdf";
-	echo $filename;
+	$uuid = get_n_secret(15);
+	$filename = $GLOBALS['pdf_repository'] . $course . "/" . "$firstname $lastname $groupname---{$uuid}.pdf";
 	if (!file_exists($GLOBALS['pdf_repository'] . $course)) {
 		mkdir($GLOBALS['pdf_repository'] . $course, 0777, true);
 	}
@@ -80,6 +93,20 @@ function save_participant_pdf($course, $groupname, $firstname, $lastname, $data)
 	$form_data = $data; //array_intersect_key($my_array, array_flip(['firstname', 'lastname', 'nickname', 'birthdate', 'zip', 'city']));
 	makeFdf("Participant.fdf", $form_data);
 	fill_pdf("Participant.fdf", "Participant.pdf", $filename);
+	return $main_url.$filename;
+}
+
+function save_about_participant_pdf($course, $groupname, $firstname, $lastname, $data) {
+	$uuid = get_n_secret(15);
+	$filename = $GLOBALS['pdf_repository'] . $course . "/" . "ABOUT-$firstname $lastname $groupname---{$uuid}.pdf";
+	if (!file_exists($GLOBALS['pdf_repository'] . $course)) {
+		mkdir($GLOBALS['pdf_repository'] . $course, 0777, true);
+	}
+	pdf_to_fdf("About_participant.pdf", "About_participant.fdf");
+	$form_data = $data; //array_intersect_key($my_array, array_flip(['firstname', 'lastname', 'nickname', 'birthdate', 'zip', 'city']));
+	makeFdf("About_participant.fdf", $form_data);
+	fill_pdf("About_participant.fdf", "About_participant.pdf", $filename);
+	return $main_url.$filename;
 }
 
 
