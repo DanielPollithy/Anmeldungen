@@ -17,7 +17,7 @@ Damit die Bewerbung an das Kursteam weitergegeben werden kann, brauchen wir noch
 Bitte fülle dazu folgendes Formular aus:<br>
 <a href='$url'>$url</a>
 <br>
-
+<br>
 Vielen Dank und Gut Pfad<br>
 Joschko
 ";

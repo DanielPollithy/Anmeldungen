@@ -1,6 +1,9 @@
 <?php 
 
-// TODO: check with code, that script was started by cron job
+// This file shall only be executable from the bash
+if (!$argv[1] || !($argv[1] == "RUN")) {
+	exit();
+}
 
 include("db.php");
 

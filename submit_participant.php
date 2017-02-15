@@ -21,6 +21,11 @@ foreach ($fields as $fieldname) {
 		error_log("Received a form with missing parameter:".$fieldname);
 		exit();
 	}
+	if (strlen($_POST[$fieldname]) >= $GLOBALS['max_string_length']) {
+		echo "String too long: $fieldname";
+		error_log("String too long: $fieldname");
+		exit();
+	}
 }
 
 // check if checkbox is in $_POST, else add it with value=False
@@ -39,13 +44,17 @@ if (0 === strpos($_POST['course'], 'GK_')) {
 	$grundkurs_additional = "";
 }
 
-
-// TODO: check if participant is already in the table
-// ...
+// Copy over wanted $_POST values
+$temp = array();
+foreach (array_merge($checkboxes, $fields) as $key) {
+	$temp[$key] = $_POST[$key];
+}
+$_POST = $temp;
 
 // Access token for group_leader
 $token = get_secret();
 
+// TODO: text validation
 add_participant($_POST['firstname'], $_POST['lastname'], $_POST['nickname'], $_POST['birthdate'], 
 	$_POST['zip'], $_POST['city'], $_POST['groupname'], $_POST['street'], $_POST['streetnumber'],
 	$_POST['cellphone'], $_POST['email'], $_POST['information'], $_POST['train_benefit'], $_POST['closest_train_station'], 
@@ -55,15 +64,13 @@ add_participant($_POST['firstname'], $_POST['lastname'], $_POST['nickname'], $_P
 	$_POST['special_about_my_group'], $_POST['biggest_challenge_in_my_group'], $_POST['my_expectations'], 
 	$_POST['want_to_learn'], $token);
 	
-//TODO: Find stafue for the participant
+//Find groupleader for the participant
 $stafue_mail = get_email_by_group($_POST['groupname']);
 	
 // WARNING: this tool could be used as a spam-email-bot
 send_receipt_mail($_POST['email']);
 send_token_to_groupleader($stafue_mail, $_POST['groupname'], $_POST['firstname'], $_POST['lastname'], $_POST['course'], $token);
 
-// TODO: make directory inaccessible for externals
-// TODO: passing $_POST on is bad!!!
 $_POST['grundkurs_additional'] = $grundkurs_additional;
 $download_link = save_participant_pdf($_POST['course'], $_POST['groupname'], $_POST['firstname'], $_POST['lastname'], $_POST);
 ?>

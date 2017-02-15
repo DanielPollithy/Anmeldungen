@@ -1,5 +1,5 @@
 <?php
 
-readfile("participants.php");
+include("participants.php");
 
 ?>

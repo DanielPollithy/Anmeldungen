@@ -9,6 +9,7 @@ $about_participant_form_url = 'http://joschko.km20616-23.keymachine.de/Anmeldung
 $main_url = 'http://joschko.km20616-23.keymachine.de/Anmeldungen/';
 $pdf_repository = 'files/';
 $unserved_temp_dir = '/home/users/joschko/tmp';
+$max_string_length = 2000;
 
 function send_template_mail($recipient, $template) {	
 	$empfaenger = $recipient;
@@ -18,6 +19,7 @@ function send_template_mail($recipient, $template) {
 	$from .= "Content-Type: text/html\n";
 	$text = include($template);
 	mail($empfaenger, $betreff, $text, $from);
+	error_log("Email ($template) sent to $recipient");
 }
 
 function send_receipt_mail($recipient) {
@@ -43,6 +45,7 @@ function pdf_to_fdf($pdf_path, $fdf_path) {
 	$output = shell_exec("pdftk $pdf_path generate_fdf output $fdf_path");	
 }
 
+// TODO: prevent fdf injection in user input
 function makeFdf($data)
 {
 	$tmpfname = tempnam($GLOBALS['unserved_temp_dir'], "FDF");
@@ -98,7 +101,8 @@ function save_participant_pdf($course, $groupname, $firstname, $lastname, $data)
 	$tmpfname = makeFdf($form_data);
 	fill_pdf($tmpfname, "pdfs/Participant.pdf", $filename);
 	unlink($tmpfname);
-	return $main_url.$filename;
+	error_log("Filled participant PDF saved to {$GLOBALS['main_url']}{$filename}");
+	return $GLOBALS['main_url'].$filename;
 }
 
 function save_about_participant_pdf($course, $groupname, $firstname, $lastname, $data) {
@@ -111,7 +115,8 @@ function save_about_participant_pdf($course, $groupname, $firstname, $lastname, 
 	$tmpfname = makeFdf($form_data);
 	fill_pdf($tmpfname, "pdfs/About_participant.pdf", $filename);
 	unlink($tmpfname);
-	return $main_url.$filename;
+	error_log("Filled about participant PDF saved to {$GLOBALS['main_url']}{$filename}");
+	return $GLOBALS['main_url'].$filename;
 }
 
 

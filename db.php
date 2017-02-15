@@ -150,10 +150,7 @@ function add_participant($firstname, $lastname, $nickname, $birthdate, $zip, $ci
 	$foto_publications_website, $foto_publications_socialmedia, $foto_publications_print_and_info,	
 	$member_since_year, $has_kubalibre, $attended_courses,
 	$my_function, $justification_for_my_function, $special_about_my_group, $biggest_challenge_in_my_group,
-	$my_expectations, $want_to_learn, $token)  {
-		
-	error_log("Try to add participant...");
-	error_log(grab_dump(func_get_args()));
+	$my_expectations, $want_to_learn, $token)  {	
 		
 	$conn = get_connection();
 	$stmt = $conn->prepare("INSERT INTO Participants 
@@ -168,6 +165,8 @@ function add_participant($firstname, $lastname, $nickname, $birthdate, $zip, $ci
 	);
 	
 	if (!$stmt) {
+		error_log("Error while adding participant");
+		error_log(grab_dump(func_get_args()));
 		echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
 		error_log("Prepare failed: (" . $conn->errno . ") " . $conn->error);
 	}
@@ -177,11 +176,13 @@ function add_participant($firstname, $lastname, $nickname, $birthdate, $zip, $ci
 			$foto_publications_print_and_info, $member_since_year, $has_kubalibre, $attended_courses, $my_function, 
 			$justification_for_my_function, $special_about_my_group, $biggest_challenge_in_my_group,
 			$my_expectations, $want_to_learn, $token
-	);	
-	
+	);		
 	$stmt->execute();
+	if ($conn->error) {
+		error_log("Error while adding participant");
+		error_log(grab_dump(func_get_args()));
+	}
 	$stmt->close();
-	error_log("Successfully added participant");
 }
 
 function add_group($name, $email) {
@@ -218,12 +219,12 @@ function get_email_by_group($name) {
 function get_participant_by_token($token) {
 	$conn = get_connection();
 	$stmt = $conn->prepare(
-	"SELECT firstname, lastname, nickname, groupname, course FROM Participants 
+	"SELECT firstname, lastname, nickname, groupname, course, birthdate, zip, city FROM Participants 
 	WHERE group_leader_access_token = ?;");
 	$stmt->bind_param("s", $token);
 	$result = $stmt->execute();
 	$stmt->store_result();
-	$stmt->bind_result($firstname, $lastname, $nickname, $groupname, $course);
+	$stmt->bind_result($firstname, $lastname, $nickname, $groupname, $course, $birthdate, $zip, $city);
 	$stmt->fetch();	
 	if ($stmt->num_rows <> 1) {
 		error_log("There was no participant with token: $token");
@@ -231,11 +232,10 @@ function get_participant_by_token($token) {
 		exit();
 	}	
 	$stmt->close();
-	return [$firstname, $lastname, $nickname, $groupname, $course];
+	return [$firstname, $lastname, $nickname, $groupname, $course, $birthdate, $zip, $city];
 }
 
 function remove_participant_token($token) {
-	error_log("Remove group_leader_access_token $token");
 	$conn = get_connection();
 	$stmt = $conn->prepare("UPDATE Participants SET group_leader_access_token=NULL WHERE group_leader_access_token = ?;");
 	$stmt->bind_param("s", $token);
@@ -269,8 +269,6 @@ function add_info_about_participant(
 		$group_leader_cellphone,
 		$group_leader_access_token) {
 			
-	error_log("Try to add info about participant...");
-	error_log(grab_dump(func_get_args()));
 	
 	$conn = get_connection();
 	$stmt = $conn->prepare("UPDATE Participants SET 
@@ -301,14 +299,14 @@ function add_info_about_participant(
 	WHERE `group_leader_access_token` = ?;
 	");
 	if (!$stmt) {
+		error_log("Error while adding info about participant");
+		error_log(grab_dump(func_get_args()));
 		echo "".$conn->error;
-		error_log("SQL: ".$conn->error);
-	}
-	
+		error_log("SQL: ".$conn->error);		
+	}	
 	$fulfilles_profile = intval($fulfilles_profile);
 	$group_provides_opportunities = intval($group_provides_opportunities);
-	$group_leader_access_token = trim($group_leader_access_token);
-	
+	$group_leader_access_token = trim($group_leader_access_token);	
 	
 	$stmt->bind_param("ssssssssssssssssssiissss", 
 		$group_leader_about_function,
@@ -338,6 +336,13 @@ function add_info_about_participant(
 	);
 
 	$result = $stmt->execute();
+	
+	if ($conn->error) {
+		error_log("Error while adding info about participant");
+		error_log(grab_dump(func_get_args()));
+		echo "".$conn->error;
+		error_log("SQL: ".$conn->error);		
+	}	
 	
 	$stmt->close();
 	
@@ -371,10 +376,19 @@ function get_list_of_groups() {
 function reveived_firmed_application($id, $date) {
 	$conn = get_connection();
 	$stmt = $conn->prepare("UPDATE Participants SET firm_date_participant = ? WHERE id = ?;");
+	if (!$stmt) {
+		error_log("Error while adding firm_date_participant");
+		error_log(grab_dump(func_get_args()));
+	}
 	$stmt->bind_param("ss", $date, $id);
 	$result = $stmt->execute();
+	if ($conn->error) {
+		error_log("Error while adding info about participant");
+		error_log(grab_dump(func_get_args()));
+		echo "".$conn->error;
+		error_log("SQL: ".$conn->error);		
+	}	
 	$stmt->close();
-	error_log("Received firmed application of user with id=$id on date=$date");
 }
 
 
@@ -385,7 +399,6 @@ function get_access_secret() {
 	$stmt->bind_param("s", $token);
 	$stmt->execute();
 	$stmt->close();
-	error_log("Successfully added token=$token");
 	return $token;
 }
 

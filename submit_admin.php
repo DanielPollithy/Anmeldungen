@@ -24,9 +24,6 @@ foreach ($_POST['ids'] as $id) {
 	}
 }
 
-error_log("Make administrative changes");
-error_log(grab_dump($_POST));
-
 foreach ($_POST['ids'] as $id) {
 	// TODO: validate date
 	reveived_firmed_application($id, $_POST["date-$id"]);

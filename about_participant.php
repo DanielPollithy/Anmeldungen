@@ -14,6 +14,9 @@ $lastname = $participant_array[1];
 $nickname = $participant_array[2];
 $groupname = $participant_array[3];
 $course = $participant_array[4];
+$birthdate = $participant_array[5];
+$zip = $participant_array[6];
+$city = $participant_array[7];
 
 ?>
 
@@ -45,6 +48,18 @@ $course = $participant_array[4];
 		
 		<label for="course">Kurs</label>
 		<input type="text" name="course" value="<? echo $course ?>" readonly>
+		<br>
+		
+		<label for="birthdate">Geburtsdatum</label>
+		<input type="text" name="birthdate" value="<? echo $birthdate ?>" readonly>
+		<br>
+		
+		<label for="zip">Postleitzahl</label>
+		<input type="text" name="zip" value="<? echo $zip ?>" readonly>
+		<br>
+		
+		<label for="city">Ort</label>
+		<input type="text" name="city" value="<? echo $city ?>" readonly>
 		<br>
 		
 		<label for="group_leader_about_function">Welche Aufgabe soll eure Teilnehmerin/euer Teilnehmer im Stamm übernehmen/weiterführen?</label>
