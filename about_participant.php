@@ -48,14 +48,14 @@ $course = $participant_array[4];
 		<br>
 		
 		<label for="group_leader_about_function">Welche Aufgabe soll eure Teilnehmerin/euer Teilnehmer im Stamm übernehmen/weiterführen?</label>
-		<textarea name="group_leader_about_function" rows="10" cols="30"></textarea>
+		<textarea name="group_leader_about_function" rows="4" cols="30"></textarea>
 		<br>
 		
 		<label for="group_leader_about_expectations">Welche Erwartungen habt ihr vom Besuch eurer Teilnehmerin/eures Teilnehmers am Kurs?</label>
-		<textarea name="group_leader_about_expectations" rows="10" cols="30"></textarea>
+		<textarea name="group_leader_about_expectations" rows="4" cols="30"></textarea>
 		
 		<label for="group_leader_about_group_situation"> Beschreibe kurz die Gruppensituation aus der eure Teilnehmerin/euer Teilnehmer kommt. Sollte er/sie Gruppenleiter/innenfunktion haben, beschreibe bitte das Team (z.B. die Stufenführung) in der er/sie mitarbeitet. </label>
-		<textarea name="group_leader_about_group_situation" rows="10" cols="30"></textarea>
+		<textarea name="group_leader_about_group_situation" rows="4" cols="30"></textarea>
 		
 		<label for="meuten_number">Anzahl Meuten</label>
 		<input type="text" name="meuten_number">

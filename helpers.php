@@ -8,6 +8,7 @@ $mail_sender_address = 'joschko.ruppersberg@pfadfinden.de';
 $about_participant_form_url = 'http://joschko.km20616-23.keymachine.de/Anmeldungen/about_participant.php?token=';
 $main_url = 'http://joschko.km20616-23.keymachine.de/Anmeldungen/';
 $pdf_repository = 'files/';
+$unserved_temp_dir = '/home/users/joschko/tmp';
 
 function send_template_mail($recipient, $template) {	
 	$empfaenger = $recipient;
@@ -42,9 +43,11 @@ function pdf_to_fdf($pdf_path, $fdf_path) {
 	$output = shell_exec("pdftk $pdf_path generate_fdf output $fdf_path");	
 }
 
-function makeFdf($makeFdf, $data)
+function makeFdf($data)
 {
-    $fdf = '%FDF-1.2
+	$tmpfname = tempnam($GLOBALS['unserved_temp_dir'], "FDF");
+    $temp = fopen($tmpfname, "w");
+	$fdf = '%FDF-1.2
     1 0 obj<</FDF<< /Fields[';
 
     foreach ($data as $key => $value) {
@@ -64,7 +67,9 @@ function makeFdf($makeFdf, $data)
     <</Root 1 0 R>>
     %%EOF";
 
-    file_put_contents($makeFdf, $fdf);
+    fwrite($temp, $fdf);
+	fclose($temp);
+	return $tmpfname;
 }
 
 function fill_pdf($fdf_path, $pdf_path, $pdf_target_path) {
@@ -89,10 +94,10 @@ function save_participant_pdf($course, $groupname, $firstname, $lastname, $data)
 	if (!file_exists($GLOBALS['pdf_repository'] . $course)) {
 		mkdir($GLOBALS['pdf_repository'] . $course, 0777, true);
 	}
-	pdf_to_fdf("Participant.pdf", "Participant.fdf");
 	$form_data = $data; //array_intersect_key($my_array, array_flip(['firstname', 'lastname', 'nickname', 'birthdate', 'zip', 'city']));
-	makeFdf("Participant.fdf", $form_data);
-	fill_pdf("Participant.fdf", "Participant.pdf", $filename);
+	$tmpfname = makeFdf($form_data);
+	fill_pdf($tmpfname, "pdfs/Participant.pdf", $filename);
+	unlink($tmpfname);
 	return $main_url.$filename;
 }
 
@@ -102,10 +107,10 @@ function save_about_participant_pdf($course, $groupname, $firstname, $lastname, 
 	if (!file_exists($GLOBALS['pdf_repository'] . $course)) {
 		mkdir($GLOBALS['pdf_repository'] . $course, 0777, true);
 	}
-	pdf_to_fdf("About_participant.pdf", "About_participant.fdf");
 	$form_data = $data; //array_intersect_key($my_array, array_flip(['firstname', 'lastname', 'nickname', 'birthdate', 'zip', 'city']));
-	makeFdf("About_participant.fdf", $form_data);
-	fill_pdf("About_participant.fdf", "About_participant.pdf", $filename);
+	$tmpfname = makeFdf($form_data);
+	fill_pdf($tmpfname, "pdfs/About_participant.pdf", $filename);
+	unlink($tmpfname);
 	return $main_url.$filename;
 }
 

@@ -122,27 +122,27 @@ $groups = get_list_of_groups();
 		<br>
 		
 		<label for="my_function">Das ist mein Amt bzw. meine Funktion im Stamm.</label>
-		<textarea name="my_function" rows="10" cols="30"></textarea>
+		<textarea name="my_function" rows="4" cols="30"></textarea>
 		<br>
 		
 		<label for="justification_for_my_function">Darum habe ich mein Amt bzw. meine Funktion im Stamm inne.</label>
-		<textarea name="justification_for_my_function" rows="10" cols="30"></textarea>	
+		<textarea name="justification_for_my_function" rows="4" cols="30"></textarea>	
 		<br>		
 		
 		<label for="special_about_my_group">Das macht meinen Stamm besonders.</label>
-		<textarea name="special_about_my_group" rows="10" cols="30"></textarea>
+		<textarea name="special_about_my_group" rows="4" cols="30"></textarea>
 		<br>
 		
 		<label for="biggest_challenge_in_my_group">Das ist die derzeit größte Herausforderung für mich in meinem Stamm.</label>
-		<textarea name="biggest_challenge_in_my_group" rows="10" cols="30"></textarea>
+		<textarea name="biggest_challenge_in_my_group" rows="4" cols="30"></textarea>
 		<br>
 		
 		<label for="my_expectations">So lauten meine drei Erwartungen an den Kurs.</label>
-		<textarea name="my_expectations" rows="10" cols="30"></textarea>
+		<textarea name="my_expectations" rows="4" cols="30"></textarea>
 		<br>
 		
 		<label for="want_to_learn">Das möchte ich nach dem Kurs mit nach Hause nehmen.</label>
-		<textarea name="want_to_learn" rows="10" cols="30"></textarea>
+		<textarea name="want_to_learn" rows="4" cols="30"></textarea>
 		<br>
 
 		<input type="submit" value="Abschicken">

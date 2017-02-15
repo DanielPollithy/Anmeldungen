@@ -1,5 +1,5 @@
 <?php
 
-readfile("Formulare/teilnehmer.html");
+readfile("participants.php");
 
 ?>
