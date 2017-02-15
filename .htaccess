@@ -1,0 +1,6 @@
+AuthName "Administration"
+AuthType Basic
+AuthUserFile /home/users/joschko/www/Anmeldungen/.htpasswd
+<Files administration.php>
+  require valid-user
+</Files>
