@@ -6,12 +6,12 @@
 	3.0 Formular mit Dreamweaver erstellen?
 	3.1 Überprüfungen -> Formular ablehnen/akzeptieren
 	3.2 Daten in SQL speichern
-3. PDFs aus SQL ausfüllen
+3. PDFs aus SQL ausfüllen (https://www.sitepoint.com/filling-pdf-forms-pdftk-php/)
 	4.1 PDF des Teilis in Kursordner abspeichern
 	4.2 PDF des Stafüs in Kursordner abspeichern 
 		-> direkt an LV-Server für Kursablage übertragen
 4. StaFü-Formular
-	4.1 Authentifizierung durch geheimen Code an E-Mail-Adresse
+	4.1 Authentifizierung durch Token an E-Mail-Adresse
 5. Eingabemaske für Gabi
 	5.1 Schriftlichen Eingang einer Anmeldung bestätigen
 6. E-Mail-Vorlagen versenden
