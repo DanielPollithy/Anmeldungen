@@ -13,7 +13,7 @@ $fields = ["firstname", "lastname", "nickname", "groupname", "course",
 "group_leader_email", "group_leader_cellphone"
 ];
 
-	
+// awaited checkboxes
 $checkboxes = ["fulfilles_profile", "group_provides_opportunities"];
 
 	
@@ -71,6 +71,7 @@ add_info_about_participant(
 );
 
 // TODO: use validated data
+// save the data in a pdf and store it for further usage
 save_about_participant_pdf($_POST['course'], $_POST['groupname'], $_POST['firstname'], $_POST['lastname'], $_POST);
 
 ?>

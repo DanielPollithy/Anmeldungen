@@ -27,11 +27,11 @@ Installation
 3. Use the htpasswd command to add credentials**
 4. Create a MySQL-Database and user who can access it
 5. Add your MySQL information in credentials.php
-6. Run setup.php
+6. Run "php setup.php RUN" from the bash
 7. Set the global variables in helpers.php
 
-* The administration is "secured" by a .htaccess file.
-** Manual for htpasswd: https://httpd.apache.org/docs/current/programs/htpasswd.html
+\* The administration is "secured" by a .htaccess file.
+\*\* Manual for htpasswd: https://httpd.apache.org/docs/current/programs/htpasswd.html
 
 
 Holes

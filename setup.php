@@ -15,6 +15,7 @@ setup_table_participants();
 setup_table_group();
 setup_table_tokens();
 
+// add groups and emails
 batch_add_group();
 
 

@@ -10,6 +10,7 @@ $fields = ["firstname", "lastname", "nickname", "birthdate", "zip", "city", "gro
 	"my_function", "justification_for_my_function", "special_about_my_group", "biggest_challenge_in_my_group",
 	"my_expectations", "want_to_learn"];
 	
+// awaited checkboxes
 $checkboxes = ["foto_publications_website", "foto_publications_socialmedia", "foto_publications_print_and_info",
 	"has_kubalibre"];
 
@@ -21,6 +22,7 @@ foreach ($fields as $fieldname) {
 		error_log("Received a form with missing parameter:".$fieldname);
 		exit();
 	}
+	// exit if any parameter is too long -> $GLOBALS['max_string_length']
 	if (strlen($_POST[$fieldname]) >= $GLOBALS['max_string_length']) {
 		echo "String too long: $fieldname";
 		error_log("String too long: $fieldname");
