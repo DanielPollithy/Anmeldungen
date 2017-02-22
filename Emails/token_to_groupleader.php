@@ -1,6 +1,6 @@
 <?php
 
-$groupname = $GLOBALS['$groupname'];
+$groupname = $GLOBALS['groupname'];
 $participant_firstname = $GLOBALS['participant_firstname'];
 $participant_lastname = $GLOBALS['participant_lastname'];
 $participant_course = $GLOBALS['participant_course'];
